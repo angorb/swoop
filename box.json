@@ -1,5 +1,6 @@
 {
-    "main": "swoop.php",
+    "main": "main.php",
+    "files" : "class.Swoop.php",
     "directories": ["vendor"],
     "stub" : true,
     "compression" : "GZ",
