@@ -1,6 +1,6 @@
 <?php
 error_reporting(E_ERROR);
-const SWOOP_VERSION = "pre";
+const SWOOP_VERSION = "pre-1";
 require "vendor/autoload.php";
 
 $term = new League\CLImate\CLImate;
@@ -17,8 +17,7 @@ $term->arguments->add([
 $url = null;
 
 if($term->arguments->defined('version')){
-    $commitHash = trim(exec('git log --pretty="%h" -n1 HEAD'));
-    $term->out("<bold>Swoop</bold> v.".SWOOP_VERSION."-{$commitHash}(git)");
+    $term->out("<bold>Swoop</bold> v.".SWOOP_VERSION);
     exit(0);
 }
 
