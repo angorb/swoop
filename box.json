@@ -1,0 +1,7 @@
+{
+    "main": "swoop.php",
+    "directories": ["vendor"],
+    "stub" : true,
+    "compression" : "GZ",
+    "output" : "swoop.phar"
+}
