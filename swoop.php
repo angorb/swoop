@@ -15,26 +15,25 @@ while (is_null($url)) {
     }
 
     if (!strpos($user_url, "http://")) {
-        $term->out("<bold><red>Error:</red></bold> No URL scheme specified. Assuming 'http'...");
+        $term->out("<bold><yellow>Notice:</yellow></bold> No URL scheme specified. Assuming 'http'...");
         $user_url = "http://" . $user_url;
     }
 
     // Remove all illegal characters from a url
     $url = filter_var($user_url, FILTER_SANITIZE_URL);
-    unset($user_url);
 
 // Validate url
     if (is_url($url) || $url == "http://localhost") {
-        $term->blue("Requesting headers from <bold>$url</bold>");
+        $term->out("Requesting headers from <bold>$url</bold>");
     } else {
-        $term->out("<bold><red>Error:</red></bold> $url is not a valid URL");
+        $term->out("<background_red><bold><black>Error:</black></bold></background_red> $url is not a valid URL");
         unset($argv[1]);
         $url = null;
     }
     if (!is_null($url)) {
         $ip = gethostbyname($url);
         if ($ip == $url) {
-            $term->out("<bold><red>Error:</red></bold> could not resolve $url");
+            $term->out("<background_red><bold><black>Error:</black></bold></background_red> could not resolve $url");
             $url = null;
         }
     }
@@ -47,11 +46,11 @@ foreach ($response as $line) {
     if (count($temp) < 2) {
         $headers[] = array(
             "",
-            "<bold><green>$line</green></bold>",
+            "<background_blue><bold><black>>> {$line}\t\t</black></bold></background_blue>",
         );
     } else {
         $headers[] = array(
-            "<bold><yellow>{$temp[0]}:</yellow></bold>",
+            "<background_light_gray><bold><black>{$temp[0]}:</black></bold></background_light_gray>",
             implode(":", array_slice($temp, 1)),
         );
     }
