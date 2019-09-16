@@ -3,5 +3,5 @@
     "directories": ["vendor"],
     "stub" : true,
     "compression" : "GZ",
-    "output" : "swoop.phar"
+    "output" : "build/swoop.phar"
 }
