@@ -3,5 +3,7 @@
     "directories": ["vendor"],
     "stub" : true,
     "compression" : "GZ",
-    "output" : "build/swoop.phar"
+    "output" : "build/swoop.phar",
+    "chmod" : "0755",
+    "git-version": "git-version"
 }

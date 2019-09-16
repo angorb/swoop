@@ -1,9 +1,26 @@
 <?php
+error_reporting(E_ERROR);
+const SWOOP_VERSION = "pre";
 require "vendor/autoload.php";
 
 $term = new League\CLImate\CLImate;
 
+$term->arguments->add([
+    'version' => [
+        'prefix'      => 'v',
+        'longPrefix'  => 'version',
+        'description' => 'Display the current version number and app info.',
+        'noValue'     => true,
+    ],
+]);
+
 $url = null;
+
+if($term->arguments->defined('version')){
+    $commitHash = trim(exec('git log --pretty="%h" -n1 HEAD'));
+    $term->out("<bold>Swoop</bold> v.".SWOOP_VERSION."-{$commitHash}(git)");
+    exit(0);
+}
 
 while (is_null($url)) {
     if (isset($argv[1])) {
@@ -14,29 +31,28 @@ while (is_null($url)) {
         $user_url = strtolower($input->prompt());
     }
 
-    if (!strpos($user_url, "http://")) {
-        $term->out("<bold><yellow>Notice:</yellow></bold> No URL scheme specified. Assuming 'http'...");
-        $user_url = "http://" . $user_url;
-    }
-
     // Remove all illegal characters from a url
     $url = filter_var($user_url, FILTER_SANITIZE_URL);
 
-// Validate url
-    if (is_url($url) || $url == "http://localhost") {
-        $term->out("Requesting headers from <bold>$url</bold>");
-    } else {
-        $term->out("<background_red><bold><black>Error:</black></bold></background_red> $url is not a valid URL");
-        unset($argv[1]);
-        $url = null;
-    }
-    if (!is_null($url)) {
-        $ip = gethostbyname($url);
-        if ($ip == $url) {
+    // Validate url
+    if ($url == "localhost") {
+        $term->out("Requesting HTTP headers from <bold>$url</bold> (127.0.0.1)"); // lol this is so hacky
+    } elseif (is_url($url)) {
+        if (dns_check_record($url)) {
+            $dns = dns_get_record($url, DNS_A);
+            $term->out("Requesting HTTP headers from <bold>$url</bold> ({$dns[0]['ip']})");
+        } else {
             $term->out("<background_red><bold><black>Error:</black></bold></background_red> could not resolve $url");
             $url = null;
         }
+    } else {
+        $term->out("<background_red><bold><black>Error:</black></bold></background_red> $url is not a valid URL");
+        $url = null;
     }
+}
+
+if (!strpos($url, "http://")) {
+    $url = "http://" . $url;
 }
 
 $response = get_headers($url);
@@ -60,7 +76,7 @@ $term->columns(($headers));
 
 function is_url($uri)
 {
-    if (preg_match('/^(http|https):\\/\\/[a-z0-9_]+([\\-\\.]{1}[a-z_0-9]+)*\\.[_a-z]{2,5}' . '((:[0-9]{1,5})?\\/.*)?$/i', $uri)) {
+    if (preg_match('/^[a-z0-9_]+([\\-\\.]{1}[a-z_0-9]+)*\\.[_a-z]{2,5}' . '((:[0-9]{1,5})?\\/.*)?$/i', $uri)) {
         return $uri;
     } else {
         return false;
