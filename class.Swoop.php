@@ -11,8 +11,8 @@ class Swoop
         $this->_console = new League\CLImate\CLImate;
 
         // set up commant line arguments accepted by the app
-        $this->_console->arguments->add([
-            'version' => [
+        $this->_console->arguments->add(
+            ['version' => [
                 'prefix' => 'v',
                 'longPrefix' => 'version',
                 'description' => 'the current version number',
@@ -26,8 +26,8 @@ class Swoop
             ],
             'host' => [
                 'description' => 'hostname',
-            ],
-        ]);
+            ],]
+        );
 
         $this->_console->arguments->parse();
 
@@ -79,12 +79,14 @@ class Swoop
                 $dns = dns_get_record($host, DNS_A);
                 $this->_console->out("Requesting HTTP headers from <bold>{$host}</bold> ({$dns[0]['ip']})");
                 $this->_host = $host;
+                return true;
             } else {
                 $this->_console->out("<background_red><bold><black>Error:</black></bold></background_red> could not resolve {$host}");
                 return false;
             }
         } else {
             $this->_console->out("<background_red><bold><black>Error:</black></bold></background_red> {$host} is not a valid URL");
+            return false;
         }
     }
 
@@ -106,14 +108,13 @@ class Swoop
                 );
             }
         }
-
         $this->_console->columns(($headers));
     }
 
     private static function _isHostname($host)
     {
         if (preg_match('/^[a-z0-9_]+([\\-\\.]{1}[a-z_0-9]+)*\\.[_a-z]{2,5}' . '((:[0-9]{1,5})?\\/.*)?$/i', $host)) {
-            return $host;
+            return true;
         } else {
             return false;
         }
