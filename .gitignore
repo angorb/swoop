@@ -1,2 +1,5 @@
 vendor/
 build.sh
+phpdox.xml
+build/phpdox/
+logs/
