@@ -1,14 +1,15 @@
 <?php
-const SWOOP_VERSION = "pre-2";
-
+namespace oxcrime\Swoop;
 class Swoop
 {
+    const SWOOP_VERSION = "pre-2";
+
     private $_host = null;
     private $_console;
 
     public function __construct($argv)
     {
-        $this->_console = new League\CLImate\CLImate;
+        $this->_console = new \League\CLImate\CLImate;
 
         // set up commant line arguments accepted by the app
         $this->_console->arguments->add(
