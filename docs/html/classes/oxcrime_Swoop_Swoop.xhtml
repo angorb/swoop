@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <title>phpDox - oxcrime\Swoop\Swoop</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css" media="screen"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  </head>
+  <body>
+    <nav class="topnav">
+      <ul>
+        <li>
+          <div class="logo"><span>/**</span>phpDox</div>
+        </li>
+        <li class="separator">
+          <a href="../index.xhtml">Overview</a>
+        </li>
+        <li class="separator">
+          <a href="../namespaces.xhtml">Namespaces</a>
+        </li>
+        <li>
+          <a href="../classes.xhtml">Classes</a>
+        </li>
+        <li class="separator">
+          <a href="../source/index.xhtml">Source</a>
+        </li>
+      </ul>
+    </nav>
+    <div id="mainstage">
+      <div class="box">
+        <ul class="breadcrumb">
+          <li>
+            <a href="../index.xhtml">Overview</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.xhtml">Classes</a>
+          </li>
+          <li class="separator">
+            <a href="../classes.xhtml#oxcrime_Swoop">oxcrime\Swoop</a>
+          </li>
+          <li class="separator">Swoop</li>
+        </ul>
+      </div>
+      <nav class="box">
+        <ul>
+          <li>
+            <a href="#introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#synopsis">Synopsis</a>
+          </li>
+          <li>
+            <a href="#tasks">Tasks</a>
+          </li>
+          <li>
+            <a href="#constants">Constants</a>
+          </li>
+          <li>
+            <a href="#members">Members</a>
+          </li>
+          <li>
+            <a href="#methods">Methods</a>
+          </li>
+          <li>
+            <a href="#history">History</a>
+          </li>
+          <li>
+            <a href="../source/class.Swoop.php.xhtml#line10">Source</a>
+          </li>
+        </ul>
+      </nav>
+      <section>
+        <h1 id="introduction"><small>oxcrime\Swoop\</small>Swoop</h1>
+        <h4>A stupid-simple utility for viewing HTTP header information.</h4>
+        <p/>
+        <ul>
+          <li>Author: Nick Brogna &lt;oxcrime@gmail.com&gt;</li>
+        </ul>
+        <h2 id="synopsis">Synopsis</h2>
+        <div class="synopsis">class Swoop
+            {<br/><ul class="none"><li>// constants</li><li>const VERSION = '0.0.1';</li></ul><ul class="none"><li>// members</li><li>private <span title="\SebastianBergmann\Version">Version</span> <a href="#members">$_version</a>;
+                    </li><li>private  <a href="#members">$_host</a> =
+                        NULL;
+                    </li><li>private <span title="\League\CLImate\CLImate">CLImate</span> <a href="#members">$_console</a>;
+                    </li></ul><ul class="none"><li>// methods</li><li>private void <a title="oxcrime\Swoop\Swoop" href="../classes/oxcrime_Swoop_Swoop/__construct.xhtml">__construct</a>()
+                    </li><li>public static <span title="Swoop">Swoop</span> <a title="oxcrime\Swoop\Swoop" href="../classes/oxcrime_Swoop_Swoop/init.xhtml">init</a>()
+                    </li><li>private void <a title="oxcrime\Swoop\Swoop" href="../classes/oxcrime_Swoop_Swoop/_promptForHostname.xhtml">_promptForHostname</a>()
+                    </li><li>private bool <a title="oxcrime\Swoop\Swoop" href="../classes/oxcrime_Swoop_Swoop/_validateHost.xhtml">_validateHost</a>()
+                    </li><li>private void <a title="oxcrime\Swoop\Swoop" href="../classes/oxcrime_Swoop_Swoop/_showHTTPHeaders.xhtml">_showHTTPHeaders</a>()
+                    </li><li>private static bool <a title="oxcrime\Swoop\Swoop" href="../classes/oxcrime_Swoop_Swoop/_isHostname.xhtml">_isHostname</a>()
+                    </li></ul>
+
+            }<br/></div>
+        <h2 id="tasks">Tasks</h2>
+        <table class="styled">
+          <thead>
+            <tr>
+              <th style="width:3em;">Line</th>
+              <th>Task</th>
+            </tr>
+          </thead>
+          <tr>
+            <td class="nummeric">141</td>
+            <td>look into why this is necessary</td>
+          </tr>
+        </table>
+        <h2 id="constants">Constants</h2>
+        <table class="styled">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td id="VERSION">VERSION</td>
+              <td>'0.0.1'</td>
+            </tr>
+          </tbody>
+        </table>
+        <h2 id="members">Members</h2>
+        <div class="styled members">
+          <h4>private</h4>
+          <ul class="members">
+            <li id="_console"><strong>$_console</strong>
+                —
+                <a title="\League\CLImate\CLImate" href="../classes/_League_CLImate_CLImate.xhtml">\League\CLImate\CLImate</a><br/><span class="indent">CLImate object for interacting with the program via the command line</span></li>
+            <li id="_host"><strong>$_host</strong>
+                —
+                string<br/><span class="indent">Holds the value of and/or waits for the hostname we're trying to look up</span></li>
+            <li id="_version"><strong>$_version</strong>
+                —
+                <a title="\SebastianBergmann\Version" href="../classes/_SebastianBergmann_Version.xhtml">\SebastianBergmann\Version</a><br/><span class="indent">Version object, for git version information</span></li>
+          </ul>
+        </div>
+        <h2 id="methods">Methods</h2>
+        <div class="styled">
+          <h4>private</h4>
+          <ul>
+            <li id="__construct"><a title="oxcrime\Swoop\Swoop" href="../classes/oxcrime_Swoop_Swoop/__construct.xhtml">__construct()</a>
+                — Entry point for the main program execution.</li>
+            <li id="_isHostname"><a title="oxcrime\Swoop\Swoop" href="../classes/oxcrime_Swoop_Swoop/_isHostname.xhtml">_isHostname()</a>
+                — Checks the provided hostname against a regular expression for format issues</li>
+            <li id="_promptForHostname"><a title="oxcrime\Swoop\Swoop" href="../classes/oxcrime_Swoop_Swoop/_promptForHostname.xhtml">_promptForHostname()</a>
+                — Prompts the user for the hostname if cli arguments are missing or invalid</li>
+            <li id="_showHTTPHeaders"><a title="oxcrime\Swoop\Swoop" href="../classes/oxcrime_Swoop_Swoop/_showHTTPHeaders.xhtml">_showHTTPHeaders()</a>
+                — Print the header information provided by get_headers() to the prettified console</li>
+            <li id="_validateHost"><a title="oxcrime\Swoop\Swoop" href="../classes/oxcrime_Swoop_Swoop/_validateHost.xhtml">_validateHost()</a>
+                — Checks if $host is a valid url via dns_check_record() and dns_get_record()</li>
+          </ul>
+          <h4>public</h4>
+          <ul>
+            <li id="init"><a title="oxcrime\Swoop\Swoop" href="../classes/oxcrime_Swoop_Swoop/init.xhtml">init()</a>
+                — Executes the main application</li>
+          </ul>
+        </div>
+        <h2 id="history">History</h2>
+        <ul class="styled history"/>
+      </section>
+    </div>
+    <footer>
+      <span>Generated using phpDox 0.12.0 - Copyright (C) 2010 - 2019 by Arne Blankerts and Contributors</span>
+    </footer>
+  </body>
+</html>

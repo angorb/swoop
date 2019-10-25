@@ -1,6 +1,6 @@
 {
-    "main": "swoop.php",
-    "directories": ["vendor"],
+    "main": "main.php",
+    "directories": ["vendor","src"],
     "stub" : true,
     "compression" : "GZ",
     "output" : "build/swoop.phar",

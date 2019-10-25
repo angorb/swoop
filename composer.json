@@ -1,5 +1,7 @@
 {
     "require": {
-        "league/climate": "^3.5"
+        "league/climate": "^3.5",
+        "sebastian/version": "^2.0",
+        "vlucas/phpdotenv": "^3.6"
     }
 }
