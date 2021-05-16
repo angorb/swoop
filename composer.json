@@ -2,9 +2,11 @@
     "name": "angorb/swoop",
     "description": "A stupid-simple utility for viewing HTTP header information.",
     "type": "project",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
-        "league/climate": "^3.7",
-        "sebastian/version": "^3.0"
+        "sebastian/version": "^3.0",
+        "league/climate": "^3.7"
     },
     "authors": [
         {
@@ -16,5 +18,8 @@
         "psr-4": {
             "Angorb\\Swoop\\": "src/"
         }
+    },
+    "require-dev": {
+        "bamarni/composer-bin-plugin": "^1.4"
     }
 }
