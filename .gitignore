@@ -3,3 +3,5 @@ build.sh
 phpdox.xml
 build/phpdox/
 logs/
+tests/
+.DS_Store
