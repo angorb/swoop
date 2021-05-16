@@ -1,9 +1,11 @@
 {
     "main": "main.php",
-    "directories": ["vendor","src"],
-    "stub" : true,
-    "compression" : "GZ",
-    "output" : "build/swoop.phar",
-    "chmod" : "0755",
+    "directories": [
+        "vendor"
+    ],
+    "stub": true,
+    "compression": "GZ",
+    "output": "bin/swoop.phar",
+    "chmod": "0755",
     "git-version": "git-version"
 }
