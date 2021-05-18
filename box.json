@@ -3,9 +3,10 @@
     "directories": [
         "vendor"
     ],
-    "stub": true,
+    "blacklist": [
+        "bamarni"
+    ],
     "compression": "GZ",
     "output": "bin/swoop.phar",
-    "chmod": "0755",
     "git-version": "git-version"
 }
