@@ -5,6 +5,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
+        "sebastian/version": "^3.0",
         "league/climate": "^3.7"
     },
     "authors": [
