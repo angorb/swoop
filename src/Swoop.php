@@ -5,20 +5,13 @@ namespace Angorb\Swoop;
 /**
  * A stupid-simple utility for viewing HTTP header information.
  * @author Nick Brogna <oxcrime@gmail.com>
- * @version 0.0.2
+ * @version 0.0.3
  */
 class Swoop
 {
 
-    private const VERSION = '0.0.2';
-
-    /**
-     * Version object, for git version information
-     *
-     * @var \SebastianBergmann\Version $version
-     * @see https://packagist.org/packages/sebastian/version
-     */
-    private $version;
+    private const VERSION = '0.0.3';
+    private const HEADER_STATUS_STRING = '<background_%2$s><bold><%3$s>>> %1$s </%3$s></bold></background_%2$s>';
 
     /**
      * Holds the value of and/or waits for the hostname we're trying to look up
@@ -36,20 +29,18 @@ class Swoop
     private $console;
 
     /**
+     * The HTTP protocol handler, with or without SSL
+     *
+     * @var string $protocol
+     */
+    private $protocol = "http://";
+
+    /**
      * Entry point for the main program execution.
      * It's essentially procedural and could use some work
-     * //TODO fix this
-     *
-     * @param array $argv
      */
     private function __construct()
     {
-        // set the version string with the current git
-        $this->version = new \SebastianBergmann\Version(
-            self::VERSION,
-            __DIR__
-        );
-
         // instantiate a new CLImate console to help make creating a
         // PHP CLI app much more reasonable
         $this->console = new \League\CLImate\CLImate();
@@ -69,6 +60,12 @@ class Swoop
                     'description' => 'Prints a usage statement',
                     'noValue' => \true,
                 ],
+                'https' => [
+                    'prefix' => 's',
+                    'longPrefix' => 'https',
+                    'description' => 'Use HTTPS instead of HTTP',
+                    'noValue' => \true,
+                ],
                 'host' => [
                     'description' => 'hostname',
                 ]
@@ -76,9 +73,10 @@ class Swoop
         );
 
         $this->console->out(
-            "<bold>S<red>w</red><yellow>o</yellow><blue>o</blue>p</bold> v. " .
-                $this->version->getVersion()
+            "<bold>S<red>w</red><yellow>o</yellow><blue>o</blue>p</bold> v" .
+                self::VERSION
         );
+
         $this->console->arguments->parse();
 
         // do nothing and exit after printing the version string
@@ -91,9 +89,12 @@ class Swoop
             exit(0);
         }
 
-        global $argv;
-        if (isset($argv[1])) {
-            $this->validateHost($argv[1]);
+        if ($this->console->arguments->defined('https')) {
+            $this->protocol = "https://";
+        }
+
+        if ($this->console->arguments->exists('host') && !empty($this->console->arguments->get('host'))) {
+            $this->validateHost($this->console->arguments->get('host'));
         }
 
         while (\is_null($this->host)) {
@@ -143,7 +144,7 @@ class Swoop
         // TODO look into why this is necessary
         if ($host == "localhost") {
             $this->console->out(
-                "Requesting HTTP headers from <bold>localhost</bold> (127.0.0.1)"
+                "Requesting headers from <bold>{$this->protocol}localhost</bold> (127.0.0.1)"
             );
             $this->host = "localhost";
             return \true;
@@ -153,7 +154,7 @@ class Swoop
             if (\checkdnsrr($host, "A")) {
                 $dns = \dns_get_record($host, DNS_A);
                 $this->console->out(
-                    "Requesting HTTP headers from <bold>{$host}</bold> ({$dns[0]['ip']})"
+                    "Requesting headers from <bold>{$this->protocol}{$host}</bold> ({$dns[0]['ip']})"
                 );
                 $this->host = $host;
                 return \true;
@@ -178,22 +179,56 @@ class Swoop
      */
     private function showHTTPHeaders(): void
     {
-        $response = \get_headers("http://" . $this->host);
+        $response = \get_headers($this->protocol . $this->host);
         $headers = [];
         foreach ($response as $line) {
-            $temp = \explode(
+            $parts = \explode(
                 ":",
                 $line
             );
-            if (\count($temp) < 2) {
+            if (\count($parts) < 2) {
+                $parts = \explode(
+                    " ",
+                    $line
+                );
+
+                // Colorize the CLImate output based on HTTP status code
+                // not thoroughly tested, but works well enough for now
+                $statusBkgColor = "light_gray";
+                $statusTextColor = "black";
+
+                if ($parts[1] >= 200  && $parts[1] < 300) {
+                    $statusBkgColor = "green";
+                    $statusTextColor = "black";
+                }
+
+                if ($parts[1] >= 300  && $parts[1] < 400) {
+                    $statusBkgColor = "blue";
+                    $statusTextColor = "white";
+                }
+
+                if ($parts[1] >= 300  && $parts[1] < 400) {
+                    $statusBkgColor = "yellow";
+                    $statusTextColor = "black";
+                }
+
+                if ($parts[1] >= 500) {
+                    $statusBkgColor = "red";
+                }
+
                 $headers[] = array(
                     "",
-                    "<background_blue><bold><white>>> {$line}\t\t</white></bold></background_blue>",
+                    \sprintf(
+                        self::HEADER_STATUS_STRING,
+                        $line,
+                        $statusBkgColor,
+                        $statusTextColor
+                    ),
                 );
             } else {
                 $headers[] = array(
-                    "<background_light_gray><bold><black>{$temp[0]}:</black></bold></background_light_gray>",
-                    \implode(":", \array_slice($temp, 1)),
+                    "<background_light_gray><bold><black>{$parts[0]}:</black></bold></background_light_gray>",
+                    \implode(":", \array_slice($parts, 1)),
                 );
             }
         }
@@ -210,7 +245,8 @@ class Swoop
     {
         return \filter_var(
             $host,
-            \FILTER_VALIDATE_DOMAIN
+            \FILTER_VALIDATE_DOMAIN,
+            \FILTER_FLAG_HOSTNAME
         ) ?
             \true :
             \false;
