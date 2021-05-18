@@ -1,5 +1,6 @@
 vendor/
 build.sh
+install.sh
 phpdox.xml
 build/phpdox/
 logs/
@@ -7,3 +8,4 @@ tests/
 .DS_Store
 box.json
 vendor-bin
+.gitignore
