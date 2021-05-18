@@ -5,3 +5,4 @@ build/phpdox/
 logs/
 tests/
 .DS_Store
+box.json
