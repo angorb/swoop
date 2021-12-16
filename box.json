@@ -1,0 +1,13 @@
+{
+    "main": "main.php",
+    "directories": [
+        "vendor",
+        "src"
+    ],
+    "blacklist": [
+        "bamarni"
+    ],
+    "compression": "GZ",
+    "output": "bin/swoop",
+    "git-version": "git-version"
+}
